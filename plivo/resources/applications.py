@@ -15,7 +15,7 @@ class Application(PlivoResource):
     _identifier_string = 'app_id'
 
     def update(self,
-               answer_url=None,
+               answer_url,
                answer_method='POST',
                hangup_url=None,
                hangup_method='POST',
