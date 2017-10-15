@@ -55,7 +55,7 @@ class AccountTest(PlivoResourceTestCase):
 
         account_details = self.client.account.get()
 
-        with self.assertRaises(plivo.exceptions.InvalidRequestError):
+        with self.assertRaises(plivo.exceptions.ValidationError):
             account_details.update()
 
     @with_response(202)
