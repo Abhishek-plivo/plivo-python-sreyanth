@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from httmock import HTTMock, all_requests
 
-from plivo import Client
+from plivo import RestClient
 
 
 @all_requests
@@ -11,7 +11,7 @@ def plivo_mock(url, request):
     return request
 
 
-class PlivoTestClient(Client):
+class PlivoTestClient(RestClient):
     def __init__(self, auth_id=None, auth_token=None):
         super(PlivoTestClient, self).__init__(auth_id, auth_token)
         self.set_expected_response(500, {})
