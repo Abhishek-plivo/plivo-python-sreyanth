@@ -32,7 +32,7 @@ class AccountTest(PlivoResourceTestCase):
         self.assertEqual(False, account_details.auto_recharge)
 
     def test_account_update_no_params(self):
-        with self.assertRaises(plivo.exceptions.InvalidRequestError):
+        with self.assertRaises(plivo.exceptions.ValidationError):
             self.client.account.update()
 
         expected_response = {
