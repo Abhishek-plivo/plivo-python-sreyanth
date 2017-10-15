@@ -3,6 +3,8 @@
 Base classes, used to deal with every Plivo resource.
 """
 
+import pprint
+
 from plivo.exceptions import InvalidRequestError
 
 
@@ -48,6 +50,9 @@ class ResponseObject(object):
     def __delitem__(self, key):
         del self.__dict__
 
+    def __str__(self):
+        return pprint.pformat(self.__dict__)
+
 
 class ListResponseObject(ResponseObject):
     def __init__(self, client, dct):
@@ -58,6 +63,9 @@ class ListResponseObject(ResponseObject):
 
     def __len__(self):
         return len(self.objects)
+
+    def __str__(self):
+        return pprint.pformat(self.objects)
 
 
 class PlivoResource(ResponseObject):
@@ -84,8 +92,10 @@ class PlivoResource(ResponseObject):
         self.client = client
 
     def __str__(self):
-        return '{class_name}({identifier})'.format(
-            class_name=self._name, identifier=self.id)
+        # return '{class_name}({identifier})'.format(
+        #    class_name=self._name, identifier=self.id)
+
+        return pprint.pformat(self.__dict__)
 
     def __repr__(self):
         return self.__str__()

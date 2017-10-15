@@ -5,7 +5,7 @@ Account & Subaccount classes - along with their list classes
 
 from plivo.base import (ListResponseObject, PlivoResource,
                         PlivoResourceInterface)
-from plivo.exceptions import InvalidRequestError
+from plivo.exceptions import ValidationError
 from plivo.utils import to_param_dict
 from plivo.utils.validators import *
 
@@ -13,6 +13,12 @@ from plivo.utils.validators import *
 class Subaccount(PlivoResource):
     _name = 'Subaccount'
     _identifier_string = 'auth_id'
+
+    def update(self, name, enabled=False):
+        return self.client.subaccounts.update(self.id, name, enabled)
+
+    def delete(self):
+        return self.client.subaccounts.delete(self.id)
 
 
 class Subaccounts(PlivoResourceInterface):
@@ -90,7 +96,7 @@ class Accounts(PlivoResourceInterface):
         address=[optional(of_type(six.text_type))])
     def update(self, name=None, city=None, address=None):
         if not (name or city or address):
-            raise InvalidRequestError(
+            raise ValidationError(
                 'One parameter of name, city and address is required')
         return self.client.request(
             'POST', tuple(), {'name': name,
