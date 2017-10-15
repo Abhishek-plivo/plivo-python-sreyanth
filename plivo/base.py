@@ -42,7 +42,10 @@ class ResponseObject(object):
         return item in self.__dict__
 
     def __getitem__(self, item):
-        return self.__dict__.__getitem__(item)
+        try:
+            return self.__dict__.__getitem__(item)
+        except KeyError:
+            return self.objects.__getitem__(item)
 
     def __setitem__(self, key, value):
         self.__dict__.__setitem__(key, value)
@@ -51,6 +54,9 @@ class ResponseObject(object):
         del self.__dict__
 
     def __str__(self):
+        return pprint.pformat(self.__dict__)
+
+    def __repr__(self):
         return pprint.pformat(self.__dict__)
 
 
@@ -66,6 +72,9 @@ class ListResponseObject(ResponseObject):
 
     def __str__(self):
         return pprint.pformat(self.objects)
+
+    def __repr__(self):
+        return str([object for object in self.objects])
 
 
 class PlivoResource(ResponseObject):
