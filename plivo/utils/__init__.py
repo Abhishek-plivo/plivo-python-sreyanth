@@ -8,8 +8,8 @@ from hmac import new as hnew
 from hashlib import sha256
 try:
     from urlparse import urlparse, urlunparse
-except ImportError:
-    from urllib3.parse import urlparse, urlunparse
+except:
+    from urllib.parse import urlparse, urlunparse
 
 
 def validate_signature(uri, nonce, signature, auth_token=''):
