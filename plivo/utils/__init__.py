@@ -6,10 +6,11 @@ from datetime import datetime
 from base64 import encodestring
 from hmac import new as hnew
 from hashlib import sha256
+
 try:
-    from urlparse import urlparse, urlunparse
-except:
     from urllib.parse import urlparse, urlunparse
+except ImportError:
+    from urlparse import urlparse, urlunparse
 
 
 def validate_signature(uri, nonce, signature, auth_token=''):
@@ -22,13 +23,18 @@ def validate_signature(uri, nonce, signature, auth_token=''):
     :param auth_token: Plivo Auth token
     :return: True if the request matches signature, False otherwise
     """
+
+    auth_token = bytes(auth_token.encode('utf-8'))
+    nonce = bytes(nonce.encode('utf-8'))
+    signature = bytes(signature.encode('utf-8'))
+
     parsed_uri = urlparse(uri.encode('utf-8'))
     base_url = urlunparse(
         (parsed_uri.scheme.decode('utf-8'), parsed_uri.netloc.decode('utf-8'),
          parsed_uri.path.decode('utf-8'), '', '', '')).encode('utf-8')
-    return encodestring(
-        hnew(auth_token, str(base_url) + str(nonce), sha256)
-        .digest()).strip() == signature
+
+    return encodestring(hnew(auth_token, base_url + nonce, sha256)
+                        .digest()).strip() == signature
 
 
 def is_valid_time_comparison(time):
