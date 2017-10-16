@@ -3,6 +3,29 @@ import inspect
 import re
 from datetime import datetime
 
+from base64 import encodestring
+from hmac import new as hnew
+from hashlib import sha256
+from urlparse import urlparse, urlunparse
+
+
+def validate_signature(uri, nonce, signature, auth_token=''):
+    """
+    Validates requests made by Plivo to your servers.
+
+    :param uri: Your server URL
+    :param nonce: X-Plivo-Signature-V2-Nonce
+    :param signature: X-Plivo-Signature-V2 header
+    :param auth_token: Plivo Auth token
+    :return: True if the request matches signature, False otherwise
+    """
+    parsed_uri = urlparse(uri.encode('utf-8'))
+    base_url = urlunparse(
+        (parsed_uri.scheme.decode('utf-8'), parsed_uri.netloc.decode('utf-8'),
+         parsed_uri.path.decode('utf-8'), '', '', '')).encode('utf-8')
+    return encodestring(hnew(auth_token, base_url + nonce, sha256)
+                        .digest()).strip() == signature
+
 
 def is_valid_time_comparison(time):
     if isinstance(time, datetime):
