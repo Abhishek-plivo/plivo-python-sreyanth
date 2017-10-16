@@ -8,14 +8,12 @@ class SignatureTest(PlivoResourceTestCase):
     def test_signature(self):
         self.assertEqual(True,
                          plivo.utils.validate_signature(
-                             uri='https://answer.url',
-                             '12345',
+                             'https://answer.url', '12345',
                              'ehV3IKhLysWBxC1sy8INm0qGoQYdYsHwuoKjsX7FsXc=',
                              'my_auth_token'))
 
         self.assertEqual(False,
                          plivo.utils.validate_signature(
-                             uri='https://answer.url',
-                             '12345',
+                             'https://answer.url', '12345',
                              'ehV3IKhLysWBxC1sy8INm0qGoQYdYsHwuoKjsX7FsXc=',
                              'my_auth_tokens'))
