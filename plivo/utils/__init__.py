@@ -6,7 +6,10 @@ from datetime import datetime
 from base64 import encodestring
 from hmac import new as hnew
 from hashlib import sha256
-from urlparse import urlparse, urlunparse
+try:
+    from urlparse import urlparse, urlunparse
+except ImportError:
+    from urllib3.parse import urlparse, urlunparse
 
 
 def validate_signature(uri, nonce, signature, auth_token=''):
