@@ -26,8 +26,9 @@ def validate_signature(uri, nonce, signature, auth_token=''):
     base_url = urlunparse(
         (parsed_uri.scheme.decode('utf-8'), parsed_uri.netloc.decode('utf-8'),
          parsed_uri.path.decode('utf-8'), '', '', '')).encode('utf-8')
-    return encodestring(hnew(auth_token, base_url + nonce, sha256)
-                        .digest()).strip() == signature
+    return encodestring(
+        hnew(auth_token, str(base_url) + str(nonce), sha256)
+        .digest()).strip() == signature
 
 
 def is_valid_time_comparison(time):
