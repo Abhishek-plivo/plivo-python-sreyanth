@@ -1,23 +1,18 @@
 from setuptools import find_packages, setup
 
 long_description = '''\
-Plivo Python SDK
-----------------
-
-DESCRIPTION
 The Plivo Python SDK makes it simpler to integrate communications into your
-Python applications using the Plivo REST API.
+Python applications using the Plivo REST API. Using the SDK, you will be able
+to make voice calls, send SMS and generate Plivo XML to control your call flows.
 
 See https://github.com/plivo/plivo-python for more information.
-
-LICENSE
-The Plivo Python SDK is distributed under the MIT License.
 '''
 
 setup(
     name='plivo',
-    version='4.0.0b1',
-    description='Plivo API client and Plivo XML generator',
+    version='4.0-beta1',
+    description=
+    'A Python SDK to make voice calls & send SMS using Plivo and to generate Plivo XML',
     long_description=long_description,
     url='https://github.com/plivo/plivo-python',
     author='The Plivo SDKs Team',
