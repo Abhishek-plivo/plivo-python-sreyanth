@@ -1,4 +1,5 @@
 .coverage
+build/
 cover/
 dist/
 *.egg-info/
