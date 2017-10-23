@@ -1,8 +1,9 @@
 .coverage
 cover/
-.tox/
+dist/
 *.egg-info/
 .idea/
 *.pyc
 *.pyo
 ./tests/htmlcov/
+.tox/
